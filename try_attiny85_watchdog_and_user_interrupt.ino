@@ -19,8 +19,12 @@
  *  - ATmega328: configured to detect falling-edge input -> creates an interrupt only on press, not on release
  *  - ATtiny85: can only wake up with LOW-level input -> creates repeated interrupts while LOW level is maintained. 
  *    After input goes back to HIGH -> executes code following sleep_cpu() command.
- 
+ *
  * PCINT0 is triggered via a dedicated manual switch -> creates an interrupt on both press and release.
+ *
+ * ==> As a consequence, INT0 is best no used on ATtiny85 in combination with sleep_cpu(). Use PCINT0 instead and trigger 
+ * actions depending on current PCINTx port input values and/or port input changes (HIGH to LOW or LOW to HIGH).
+ *
  *
  * See the base for this project in this repository: 
  * https://github.com/oliver-reinhard/attiny85-watchdog 
