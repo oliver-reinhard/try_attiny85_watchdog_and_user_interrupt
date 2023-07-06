@@ -51,13 +51,13 @@
 #include <avr/wdt.h>
 
 #if defined(__AVR_ATmega328P__)
-  const uint8_t WATCHDOG_TIMEOUT_LED_PIN = 13;      // digital: out LED — PB5 is the built-in on ATmega328 board)
+  const uint8_t WATCHDOG_TIMEOUT_LED_PIN = 13;      // digital: out LED — PB5 is the built-in on ATmega328 board) -> wire this port or use built-in LED
   const uint8_t SLEEP_INTERRUPT_LED_PIN = 12;       // digital: out 
   const uint8_t INT0_PIN = 2;                       // external-interrupt source; only pin 2 will trigger INT0
   const uint8_t PCINT0_PIN = 8;                     // pin-change interrupt source 
 
 #elif defined(__AVR_ATtiny85__)
-  const uint8_t WATCHDOG_TIMEOUT_LED_PIN = PB0;     // digital: out (LED — PB0 is the built-in on ATtiny85 programmer)
+  const uint8_t WATCHDOG_TIMEOUT_LED_PIN = PB0;     // digital: out (LED — PB0 is the built-in on ATtiny85 programmer) -> wire this port or use built-in LED
   const uint8_t SLEEP_INTERRUPT_LED_PIN = PB1;      // digital: out 
   const uint8_t INT0_PIN = PB2;                     // external-interrupt source; only pin PB2 will trigger INT0
   const uint8_t PCINT0_PIN = PB3;                   // pin-change interrupt source
@@ -133,11 +133,11 @@ void configPinChangeInt0() {
   // Pin-change interrupts are triggered for each level-change; this cannot be configured
   #if defined(__AVR_ATmega328P__)
     PCICR  |= _BV(PCIE0);          // Enable pin-change interrupt 0 
-    PCMSK0 |= _BV(PCINT1);         // Configure pin 8 as pin-change source for PCINT interrupt
+    PCMSK0 |= _BV(PCINT1);         // Configure pin 8 as pin-change source for PCIE0 interrupt
 
   #elif defined(__AVR_ATtiny85__)
     GIMSK|= _BV(PCIE);            // Enable pin-change interrupt
-    PCMSK|= _BV(PCINT3);          // Configure PB3 as pin-change source for PCINT0 interrupt
+    PCMSK|= _BV(PCINT3);          // Configure PB3 as pin-change source for PCIE interrupt
   #endif
 }
 
